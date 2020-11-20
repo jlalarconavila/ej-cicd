@@ -1,0 +1,22 @@
+name: Sonarcloud QA 
+on:
+  # Eventos que lanzaran la Github Actions
+  push:
+    branches:
+      - master  
+  pull_request:
+      types: [opened, synchronize, reopened] 
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest  #Se ejecutara sobre un contenedore linux
+    steps:
+    - uses: actions/checkout@v2   # Hace checkout del proyecto.
+      with:        
+        fetch-depth: 0
+    # Configura la acción
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        
